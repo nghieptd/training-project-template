@@ -1,1 +1,7 @@
 // Header styles
+@import '../../../node_modules/office-ui-fabric-core/dist/sass/References';
+
+.header-h4 {
+  color: $ms-color-gray120;
+  margin: 2rem 1rem;
+}
