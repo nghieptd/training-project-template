@@ -1,11 +1,11 @@
 // Navigation styles
 @import '../../../node_modules/office-ui-fabric-core/dist/sass/References';
 
-.navbar-color {
+.navigation {
   background-color: $ms-color-gray20;
-}
-.custom-nav-item {
-  a {
-    color: black;
+  .nav-item {
+    a {
+      color: black;
+    }
   }
 }

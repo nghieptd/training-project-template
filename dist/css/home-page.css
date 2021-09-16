@@ -1,11 +1,10 @@
 /*
   Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
 */
-.navbar-color {
+.navigation {
   background-color: #f3f2f1;
 }
-
-.custom-nav-item a {
+.navigation .nav-item a {
   color: black;
 }
 
