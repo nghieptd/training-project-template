@@ -3,9 +3,32 @@
 */
 .navigation {
   background-color: #f3f2f1;
+  font-size: 16px;
+  padding: 0.6rem;
 }
-.navigation .nav-item a {
-  color: black;
+.navigation .nav-item {
+  padding: 0 1em;
+}
+.navigation .nav-item:hover {
+  cursor: pointer;
+}
+.navigation .nav-item .item-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navigation .nav-item .item-wrap > * + * {
+  margin-left: 0.5em;
+}
+.navigation .nav-item .excelIcon {
+  color: #217346;
+}
+.navigation .nav-item .dropdown-toggle::after {
+  display: none;
+}
+.navigation .nav-item .dropdown-menu {
+  margin-top: 0.6rem;
+  margin-left: 0.8em;
 }
 
 /*

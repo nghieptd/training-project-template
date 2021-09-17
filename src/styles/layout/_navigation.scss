@@ -1,11 +1,39 @@
 // Navigation styles
 @import '../../../node_modules/office-ui-fabric-core/dist/sass/References';
+@import '../utilities/variables';
+
+$buttonPadding: 1em;
 
 .navigation {
   background-color: $ms-color-gray20;
+  font-size: $ms-font-size-16;
+  padding: 0.6rem;
+
   .nav-item {
-    a {
-      color: black;
+    &:hover {
+      cursor: pointer;
     }
+
+    .item-wrap {
+      & > * + * {
+        margin-left: 0.5em;
+      }
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .excelIcon {
+      color: $excelColor;
+    }
+    .dropdown-toggle::after {
+      display: none;
+    }
+    .dropdown-menu {
+      margin-top: 0.6rem;
+      margin-left: $buttonPadding - 0.2em;
+    }
+
+    padding: 0 $buttonPadding;
   }
 }
