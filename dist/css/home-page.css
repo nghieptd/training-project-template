@@ -39,4 +39,39 @@
   margin: 2rem 1rem;
 }
 
+/*
+  Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
+*/
+.custom-table thead th {
+  border-top: none;
+  font-weight: 400;
+}
+.custom-table .headerClickable {
+  cursor: pointer;
+}
+.custom-table .headerClickable:hover {
+  background-color: #f3f2f1;
+}
+.custom-table .typeCell {
+  text-align: right;
+  width: 6%;
+}
+.custom-table .typeCell i {
+  padding-top: 0.25em;
+}
+.custom-table .nameCell {
+  width: 30%;
+}
+.custom-table .modifiedCell {
+  color: #8a8886;
+  width: 15%;
+}
+.custom-table .modByCell {
+  color: #8a8886;
+  width: 15%;
+}
+.custom-table .excelType {
+  color: #217346;
+}
+
 /*# sourceMappingURL=home-page.css.map*/

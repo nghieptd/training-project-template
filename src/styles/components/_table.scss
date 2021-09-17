@@ -1,0 +1,36 @@
+@import '../../../node_modules/office-ui-fabric-core/dist/sass/References';
+@import '../utilities/variables';
+
+.custom-table {
+  thead th {
+    border-top: none;
+    font-weight: $ms-font-weight-regular;
+  }
+  .headerClickable {
+    cursor: pointer;
+    &:hover {
+      background-color: $ms-color-gray20;
+    }
+  }
+  .typeCell {
+    text-align: right;
+    width: 6%;
+    i {
+      padding-top: 0.25em;
+    }
+  }
+  .nameCell {
+    width: 30%;
+  }
+  .modifiedCell {
+    color: $ms-color-gray110;
+    width: 15%;
+  }
+  .modByCell {
+    color: $ms-color-gray110;
+    width: 15%;
+  }
+  .excelType {
+    color: $excelColor;
+  }
+}

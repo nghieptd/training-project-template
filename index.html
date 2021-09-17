@@ -49,7 +49,14 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <div class="item-wrap dropdown-toggle" id="uploadDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div
+              class="item-wrap dropdown-toggle"
+              id="uploadDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
               <i
                 class="ms-Icon ms-Icon--Upload ms-fontColor-magentaLight"
               ></i>
@@ -58,7 +65,10 @@
                 class="ms-Icon ms-Icon--ChevronDown ms-fontColor-gray120 ms-fontSize-12"
               ></i>
             </div>
-            <div class="dropdown-menu" aria-labelledby="uploadDropdown">
+            <div
+              class="dropdown-menu"
+              aria-labelledby="uploadDropdown"
+            >
               <a class="dropdown-item">From your PC</a>
               <a class="dropdown-item">Select from OneDrive</a>
             </div>
@@ -78,7 +88,14 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <div class="item-wrap dropdown-toggle" id="flowDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div
+              class="item-wrap dropdown-toggle"
+              id="flowDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
               <i
                 class="ms-Icon ms-Icon--Flow ms-fontColor-magentaLight"
               ></i>
@@ -105,50 +122,73 @@
     </nav>
     <div class="container-fluid">
       <h4 class="header-h4">Documents</h4>
-      <table class="table">
+      <table class="table custom-table">
         <thead>
           <tr>
-            <th scope="col">Type</th>
-            <th scope="col">Name</th>
-            <th scope="col">Modified</th>
-            <th scope="col">Modified By</th>
-            <th scope="col">Add column</th>
+            <th scope="col" class="typeCell">
+              <i class="ms-Icon ms-Icon--TextDocument"></i>
+            </th>
+            <th scope="col" class="headerClickable">
+              Name
+              <i
+                class="ms-Icon ms-Icon--ChevronDown ms-fontColor-gray120 ms-fontSize-12"
+              ></i>
+            </th>
+            <th scope="col" class="headerClickable">Modified <i
+              class="ms-Icon ms-Icon--ChevronDown ms-fontColor-gray120 ms-fontSize-12"
+            ></i></th>
+            <th scope="col" class="headerClickable">Modified By <i
+              class="ms-Icon ms-Icon--ChevronDown ms-fontColor-gray120 ms-fontSize-12"
+            ></i></th>
+            <th scope="col" class="headerClickable"><i
+              class="ms-Icon ms-Icon--Add ms-fontColor-gray120 ms-fontSize-12"
+            ></i> Add column</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><i class="ms-Icon ms-Icon--FabricFolderFill"></i></td>
+            <td class="typeCell">
+              <i class="ms-Icon ms-Icon--FabricFolderFill"></i>
+            </td>
             <td>CAS</td>
-            <td>April 30</td>
-            <td>Megan Bowen</td>
+            <td class="modifiedCell">April 30</td>
+            <td class="modByCell">Megan Bowen</td>
             <td></td>
           </tr>
           <tr>
-            <td>File</td>
+            <td class="typeCell">
+              <i class="ms-Icon ms-Icon--ExcelDocument excelType"></i>
+            </td>
             <td>CoasterAndBargeLoading.xlsx</td>
-            <td>A few seconds ago</td>
-            <td>Administrator MOD</td>
+            <td class="modifiedCell">A few seconds ago</td>
+            <td class="modByCell">Administrator MOD</td>
             <td></td>
           </tr>
           <tr>
-            <td>File</td>
+            <td class="typeCell">
+              <i class="ms-Icon ms-Icon--ExcelDocument excelType"></i>
+            </td>
             <td>RevenueByServices.xlsx</td>
-            <td>A few seconds ago</td>
-            <td>Administrator MOD</td>
+            <td class="modifiedCell">A few seconds ago</td>
+            <td class="modByCell">Administrator MOD</td>
             <td></td>
           </tr>
           <tr>
-            <td>File</td>
+            <td class="typeCell">
+              <i class="ms-Icon ms-Icon--ExcelDocument excelType"></i>
+            </td>
             <td>RevenueByServices2016.xlsx</td>
-            <td>A few seconds ago</td>
-            <td>Administrator MOD</td>
+            <td class="modifiedCell">A few seconds ago</td>
+            <td class="modByCell">Administrator MOD</td>
             <td></td>
           </tr>
           <tr>
-            <td>File</td>
+            <td class="typeCell">
+              <i class="ms-Icon ms-Icon--ExcelDocument excelType"></i>
+            </td>
             <td>RevenueByServices2017.xlsx</td>
-            <td>A few seconds ago</td>
-            <td>Administrator MOD</td>
+            <td class="modifiedCell">A few seconds ago</td>
+            <td class="modByCell">Administrator MOD</td>
             <td></td>
           </tr>
         </tbody>
