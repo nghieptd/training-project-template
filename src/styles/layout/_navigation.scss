@@ -12,6 +12,10 @@ $buttonPadding: 1em;
   .nav-item {
     &:hover {
       cursor: pointer;
+      background-color: $ms-color-gray30;
+    }
+    &:active {
+      background-color: $ms-color-gray40;
     }
 
     .item-wrap {
@@ -31,7 +35,7 @@ $buttonPadding: 1em;
     }
     .dropdown-menu {
       margin-top: 0.6rem;
-      margin-left: $buttonPadding - 0.2em;
+      margin-left: 0;
     }
 
     padding: 0 $buttonPadding;

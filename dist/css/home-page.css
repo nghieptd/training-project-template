@@ -11,6 +11,10 @@
 }
 .navigation .nav-item:hover {
   cursor: pointer;
+  background-color: #edebe9;
+}
+.navigation .nav-item:active {
+  background-color: #e1dfdd;
 }
 .navigation .nav-item .item-wrap {
   display: flex;
@@ -28,7 +32,7 @@
 }
 .navigation .nav-item .dropdown-menu {
   margin-top: 0.6rem;
-  margin-left: 0.8em;
+  margin-left: 0;
 }
 
 /*
