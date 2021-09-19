@@ -1,6 +1,12 @@
 @import '../../../node_modules/office-ui-fabric-core/dist/sass/References';
 @import '../utilities/variables';
 
+$icon-padding: 0.25em;
+
+.excelType {
+  color: $excelColor;
+}
+
 .custom-table {
   thead th {
     border-top: none;
@@ -16,7 +22,7 @@
     text-align: right;
     width: 6%;
     i {
-      padding-top: 0.25em;
+      padding-top: $icon-padding;
     }
   }
   .nameCell {
@@ -30,7 +36,23 @@
     color: $ms-color-gray110;
     width: 15%;
   }
-  .excelType {
-    color: $excelColor;
+}
+
+.mobile-table {
+  table-layout: fixed;
+  th {
+    width: 37%;
+  }
+  td {
+    word-wrap: break-word;
+  }
+  .firstRow {
+    background-color: $ms-color-gray20;
+  }
+  .typeCell {
+    text-align: right;
+    i {
+      padding-top: $icon-padding;
+    }
   }
 }

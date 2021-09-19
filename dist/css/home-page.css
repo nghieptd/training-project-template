@@ -55,6 +55,10 @@
 /*
   Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
 */
+.excelType {
+  color: #217346;
+}
+
 .custom-table thead th {
   border-top: none;
   font-weight: 400;
@@ -83,8 +87,24 @@
   color: #8a8886;
   width: 15%;
 }
-.custom-table .excelType {
-  color: #217346;
+
+.mobile-table {
+  table-layout: fixed;
+}
+.mobile-table th {
+  width: 37%;
+}
+.mobile-table td {
+  word-wrap: break-word;
+}
+.mobile-table .firstRow {
+  background-color: #f3f2f1;
+}
+.mobile-table .typeCell {
+  text-align: right;
+}
+.mobile-table .typeCell i {
+  padding-top: 0.25em;
 }
 
 /*# sourceMappingURL=home-page.css.map*/
