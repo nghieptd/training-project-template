@@ -1,52 +1,6 @@
 /*
   Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
 */
-.navigation {
-  background-color: #f3f2f1;
-  font-size: 16px;
-  padding: 0.6rem;
-}
-.navigation .nav-item {
-  padding: 0.3em 1em 0;
-}
-@media only screen and (min-width: 992px) {
-  .navigation .nav-item {
-    padding: 0 1em;
-  }
-}
-.navigation .nav-item:hover {
-  cursor: pointer;
-  background-color: #edebe9;
-}
-.navigation .nav-item:active {
-  background-color: #e1dfdd;
-}
-.navigation .nav-item .item-wrap {
-  display: flex;
-  align-items: center;
-}
-.navigation .nav-item .item-wrap > * + * {
-  margin-left: 0.5em;
-}
-@media only screen and (min-width: 992px) {
-  .navigation .nav-item .item-wrap {
-    justify-content: center;
-  }
-}
-.navigation .nav-item .excelIcon {
-  color: #217346;
-}
-.navigation .nav-item .dropdown-toggle::after {
-  display: none;
-}
-.navigation .nav-item .dropdown-menu {
-  margin-top: 0.6rem;
-  margin-left: 0;
-}
-
-/*
-  Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
-*/
 .header-h4 {
   color: #797775;
   margin: 2rem 1rem;
@@ -105,6 +59,52 @@
 }
 .mobile-table .typeCell i {
   padding-top: 0.25em;
+}
+
+/*
+  Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
+*/
+.navigation {
+  background-color: #f3f2f1;
+  font-size: 16px;
+  padding: 0.6rem;
+}
+.navigation .nav-item {
+  padding: 0.3em 1em 0;
+}
+@media only screen and (min-width: 992px) {
+  .navigation .nav-item {
+    padding: 0 1em;
+  }
+}
+.navigation .nav-item:hover {
+  cursor: pointer;
+  background-color: #edebe9;
+}
+.navigation .nav-item:active {
+  background-color: #e1dfdd;
+}
+.navigation .nav-item .item-wrap {
+  display: flex;
+  align-items: center;
+}
+.navigation .nav-item .item-wrap > * + * {
+  margin-left: 0.5em;
+}
+@media only screen and (min-width: 992px) {
+  .navigation .nav-item .item-wrap {
+    justify-content: center;
+  }
+}
+.navigation .nav-item .excelIcon {
+  color: #217346;
+}
+.navigation .nav-item .dropdown-toggle::after {
+  display: none;
+}
+.navigation .nav-item .dropdown-menu {
+  margin-top: 0.6rem;
+  margin-left: 0;
 }
 
 /*# sourceMappingURL=home-page.css.map*/
