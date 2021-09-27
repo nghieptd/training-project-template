@@ -1,0 +1,52 @@
+[
+    {
+        "id": 0,
+        "name": "CAS",
+        "isFolder": true,
+        "type": null,
+        "createdBy": "Megan Bowen",
+        "createdAt": "2021-04-30T00:00:00.000Z",
+        "updatedBy": "Megan Bowen",
+        "updatedAt": "2021-04-30T00:00:00.000Z"
+    },
+    {
+        "id": 1,
+        "name": "CoasterAndBargeLoading.xlsx",
+        "isFolder": false,
+        "type": "xlsx",
+        "createdBy": "Administrator MOD",
+        "createdAt": "2021-09-27T13:37:48.799Z",
+        "updatedBy": "Administrator MOD",
+        "updatedAt": "2021-09-27T13:37:48.799Z"
+    },
+    {
+        "id": 2,
+        "name": "RevenueByServices.xlsx",
+        "isFolder": false,
+        "type": "xlsx",
+        "createdBy": "Administrator MOD",
+        "createdAt": "2021-09-27T13:37:48.799Z",
+        "updatedBy": "Administrator MOD",
+        "updatedAt": "2021-09-27T13:37:48.799Z"
+    },
+    {
+        "id": 3,
+        "name": "RevenueByServices2016.xlsx",
+        "isFolder": false,
+        "type": "xlsx",
+        "createdBy": "Administrator MOD",
+        "createdAt": "2021-09-27T13:37:48.799Z",
+        "updatedBy": "Administrator MOD",
+        "updatedAt": "2021-09-27T13:37:48.799Z"
+    },
+    {
+        "id": 4,
+        "name": "RevenueByServices2017.xlsx",
+        "isFolder": false,
+        "type": "xlsx",
+        "createdBy": "Administrator MOD",
+        "createdAt": "2021-09-27T13:37:48.799Z",
+        "updatedBy": "Administrator MOD",
+        "updatedAt": "2021-09-27T13:37:48.799Z"
+    }
+]

@@ -95,7 +95,9 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const renderGrid = () => {// TODO: implement code to Render grid
+const renderGrid = () => {
+  // TODO: implement code to Render grid
+  console.log('Hello, World!');
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (renderGrid);
