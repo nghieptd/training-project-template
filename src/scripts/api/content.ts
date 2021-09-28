@@ -1,11 +1,43 @@
 import randomSleep from '../utilities/_randomSleep';
-import data from './data';
+import initialData from './data';
 import { Node } from '../models/node';
+import { File } from '../models/file';
+
+const KEY = 'DB';
+
+const loadLocalStorage = (): any[] => {
+  const jsonString = localStorage.getItem(KEY);
+  if (!jsonString) {
+    return [];
+  }
+
+  return JSON.parse(jsonString);
+};
+const saveLocalStorage = (db: (Node | File)[]) => {
+  const mappedDB = db.map(item => ({
+    ...item,
+    type: 'type' in item ? item.type : 'folder',
+
+    createdAt: item.createdAt.toISOString(),
+    updatedAt: item.updatedAt.toISOString(),
+  }));
+
+  const jsonString = JSON.stringify(mappedDB);
+  localStorage.setItem(KEY, jsonString);
+};
 
 export const loadContents = async (
   folder?: string,
 ): Promise<Array<Node>> => {
   await randomSleep();
+
+  const jsonString = localStorage.getItem(KEY);
+  let data: any[];
+  if (jsonString) {
+    data = JSON.parse(jsonString);
+  } else {
+    data = initialData;
+  }
 
   let fetchedItems: any[] = [];
   if (!folder) {
@@ -20,7 +52,7 @@ export const loadContents = async (
     }
   }
 
-  return fetchedItems.map(item => {
+  const mappedItems = fetchedItems.map(item => {
     if (!item.isFolder) {
       /* File */
       return {
@@ -50,16 +82,36 @@ export const loadContents = async (
       updatedBy: item.updatedBy,
     };
   });
+
+  // Data from localStorage is empty - Initialize data
+  if (jsonString === null) {
+    localStorage.setItem(KEY, JSON.stringify(initialData));
+  }
+  return mappedItems;
 };
 
 export const editContent = () => {
   // TODO
 };
 
-export const deleteFile = () => {
+export const deleteContent = () => {
   // TODO
 };
 
-export const createFile = () => {
-  // TODO
+export const createContent = async (data: Node | File) => {
+  await randomSleep();
+
+  const db = loadLocalStorage();
+
+  // TODO Nested folder append
+  db.push({
+    ...data,
+    folderId: -1,
+    type: 'type' in data ? data.type : 'folder',
+
+    createdAt: data.createdAt.toISOString(),
+    updatedAt: data.updatedAt.toISOString(),
+  });
+
+  saveLocalStorage(db);
 };

@@ -103,21 +103,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data */ "./src/scripts/api/data.ts");
 
 
+const KEY = 'DB';
 const loadContents = async folder => {
   await Object(_utilities_randomSleep__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  const jsonString = localStorage.getItem(KEY);
+  let data;
+
+  if (jsonString) {
+    data = JSON.parse(jsonString);
+  } else {
+    data = _data__WEBPACK_IMPORTED_MODULE_1__["default"];
+  }
+
   let fetchedItems = [];
 
   if (!folder) {
-    fetchedItems = _data__WEBPACK_IMPORTED_MODULE_1__["default"].filter(item => item.folderId < 0);
+    fetchedItems = data.filter(item => item.folderId < 0);
   } else {
-    const targetFolder = _data__WEBPACK_IMPORTED_MODULE_1__["default"].find(item => item.name === folder);
+    const targetFolder = data.find(item => item.name === folder);
 
     if (targetFolder) {
-      fetchedItems = _data__WEBPACK_IMPORTED_MODULE_1__["default"].filter(item => item.folderId > -1 && item.folderId === targetFolder.id);
+      fetchedItems = data.filter(item => item.folderId > -1 && item.folderId === targetFolder.id);
     }
   }
 
-  return fetchedItems.map(item => {
+  const mappedItems = fetchedItems.map(item => {
     if (!item.isFolder) {
       /* File */
       return {
@@ -145,7 +155,13 @@ const loadContents = async folder => {
       updatedAt: new Date(item.updatedAt),
       updatedBy: item.updatedBy
     };
-  });
+  }); // Data from localStorage is empty - Initialize data
+
+  if (jsonString === null) {
+    localStorage.setItem(KEY, JSON.stringify(_data__WEBPACK_IMPORTED_MODULE_1__["default"]));
+  }
+
+  return mappedItems;
 };
 const editContent = () => {// TODO
 };
