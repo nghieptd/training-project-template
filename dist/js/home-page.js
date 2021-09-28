@@ -86,6 +86,139 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/scripts/api/content.ts":
+/*!************************************!*\
+  !*** ./src/scripts/api/content.ts ***!
+  \************************************/
+/*! exports provided: loadContents, editContent, deleteFile, createFile */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadContents", function() { return loadContents; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editContent", function() { return editContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteFile", function() { return deleteFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFile", function() { return createFile; });
+/* harmony import */ var _utilities_randomSleep__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/_randomSleep */ "./src/scripts/utilities/_randomSleep.ts");
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data */ "./src/scripts/api/data.ts");
+
+
+const loadContents = async folder => {
+  await Object(_utilities_randomSleep__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  let fetchedItems = [];
+
+  if (!folder) {
+    fetchedItems = _data__WEBPACK_IMPORTED_MODULE_1__["default"].filter(item => item.folderId < 0);
+  } else {
+    const targetFolder = _data__WEBPACK_IMPORTED_MODULE_1__["default"].find(item => item.name === folder);
+
+    if (targetFolder) {
+      fetchedItems = _data__WEBPACK_IMPORTED_MODULE_1__["default"].filter(item => item.folderId > -1 && item.folderId === targetFolder.id);
+    }
+  }
+
+  return fetchedItems.map(item => {
+    if (!item.isFolder) {
+      /* File */
+      return {
+        id: item.id,
+        name: item.name,
+        isFolder: item.isFolder,
+        folderId: item.folderId,
+        type: item.type,
+        createdAt: new Date(item.createdAt),
+        createdBy: item.createdBy,
+        updatedAt: new Date(item.updatedAt),
+        updatedBy: item.updatedBy
+      };
+    }
+    /* Node */
+
+
+    return {
+      id: item.id,
+      name: item.name,
+      isFolder: item.isFolder,
+      folderId: item.folderId,
+      createdAt: new Date(item.createdAt),
+      createdBy: item.createdBy,
+      updatedAt: new Date(item.updatedAt),
+      updatedBy: item.updatedBy
+    };
+  });
+};
+const editContent = () => {// TODO
+};
+const deleteFile = () => {// TODO
+};
+const createFile = () => {// TODO
+};
+
+/***/ }),
+
+/***/ "./src/scripts/api/data.ts":
+/*!*********************************!*\
+  !*** ./src/scripts/api/data.ts ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ([{
+  id: 0,
+  name: 'CoasterAndBargeLoading.xlsx',
+  type: 'xlsx',
+  isFolder: false,
+  folderId: -1,
+  createdBy: 'Administrator MOD',
+  createdAt: '2021-09-28T04:00:39.113Z',
+  updatedBy: 'Administrator MOD',
+  updatedAt: '2021-09-28T04:00:39.113Z'
+}, {
+  id: 1,
+  name: 'RevenueByServices.xlsx',
+  type: 'xlsx',
+  isFolder: false,
+  folderId: -1,
+  createdBy: 'Administrator MOD',
+  createdAt: '2021-09-28T04:00:39.113Z',
+  updatedBy: 'Administrator MOD',
+  updatedAt: '2021-09-28T04:00:39.113Z'
+}, {
+  id: 2,
+  name: 'RevenueByServices2016.xlsx',
+  type: 'xlsx',
+  isFolder: false,
+  folderId: -1,
+  createdBy: 'Administrator MOD',
+  createdAt: '2021-09-28T04:00:39.113Z',
+  updatedBy: 'Administrator MOD',
+  updatedAt: '2021-09-28T04:00:39.113Z'
+}, {
+  id: 3,
+  name: 'RevenueByServices2017.xlsx',
+  type: 'xlsx',
+  isFolder: false,
+  folderId: -1,
+  createdBy: 'Administrator MOD',
+  createdAt: '2021-09-28T04:00:39.113Z',
+  updatedBy: 'Administrator MOD',
+  updatedAt: '2021-09-28T04:00:39.113Z'
+}, {
+  id: 4,
+  name: 'CAS',
+  type: 'folder',
+  isFolder: true,
+  folderId: -1,
+  createdBy: 'Megan Bowen',
+  createdAt: '2021-04-29T17:00:00.000Z',
+  updatedBy: 'Megan Bowen',
+  updatedAt: '2021-04-29T17:00:00.000Z'
+}]);
+
+/***/ }),
+
 /***/ "./src/scripts/components/_table.ts":
 /*!******************************************!*\
   !*** ./src/scripts/components/_table.ts ***!
@@ -95,6 +228,38 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api_content__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/content */ "./src/scripts/api/content.ts");
+
+
+const formatTime = date => {
+  // eslint-disable-next-line no-restricted-globals
+  if (isNaN(date.getTime())) {
+    return 'Invalid date';
+  }
+
+  const current = new Date();
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  let strTime = `${monthNames[date.getMonth()]} ${date.getDate()}`; // Default - return month and date only
+  // Show elapsed time if within a day
+
+  if (date.getDate() === current.getDate()) {
+    const msDiff = current.getTime() - date.getTime();
+    const elapsedSec = Math.floor(msDiff / 1000);
+
+    if (elapsedSec < 10) {
+      strTime = 'A few seconds ago';
+    } else if (elapsedSec < 60) {
+      strTime = `${elapsedSec} seconds ago`;
+    } else if (elapsedSec < 3600) {
+      strTime = `${Math.floor(elapsedSec / 60)} minutes ago`;
+    } else if (elapsedSec < 86400) {
+      strTime = `${Math.floor(elapsedSec / 3600)} hours ago`;
+    }
+  }
+
+  return strTime;
+};
+
 const getTypeClasses = type => {
   const prefix = 'ms-Icon ms-Icon--';
 
@@ -110,26 +275,26 @@ const getTypeClasses = type => {
   }
 };
 
-const buildTableRow = () => {
+const buildTableRow = data => {
   const tr = document.createElement('tr');
   const type = document.createElement('td');
   type.className = 'typeCell';
   const icon = document.createElement('i');
-  icon.className = getTypeClasses('folder');
+  icon.className = getTypeClasses('type' in data ? data.type : 'folder');
   type.appendChild(icon);
   const name = document.createElement('td');
-  name.innerText = 'CAS';
+  name.innerText = data.name;
   const modifiedDate = document.createElement('td');
   modifiedDate.className = 'modifiedCell';
-  modifiedDate.innerText = 'April 30';
+  modifiedDate.innerText = formatTime(data.updatedAt);
   const modifiedBy = document.createElement('td');
   modifiedBy.className = 'modByCell';
-  modifiedBy.innerText = 'Administrator MOD';
+  modifiedBy.innerText = data.updatedBy;
   tr.append(type, name, modifiedDate, modifiedBy, document.createElement('td'));
   return tr;
 };
 
-const renderTable = () => {
+const renderTable = async () => {
   // TODO Render table data
   const tbodyDesktop = document.querySelector('#table-desktop tbody');
 
@@ -137,7 +302,9 @@ const renderTable = () => {
     return;
   }
 
-  tbodyDesktop.appendChild(buildTableRow());
+  const data = await Object(_api_content__WEBPACK_IMPORTED_MODULE_0__["loadContents"])();
+  const nodes = data.map(buildTableRow);
+  tbodyDesktop.append(...nodes);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (renderTable);
@@ -181,6 +348,32 @@ const ready = fn => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ready);
+
+/***/ }),
+
+/***/ "./src/scripts/utilities/_randomSleep.ts":
+/*!***********************************************!*\
+  !*** ./src/scripts/utilities/_randomSleep.ts ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const sleep = ms => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+const getRandomIntInclusvie = (min, max) => {
+  const minInt = Math.ceil(min);
+  const maxInt = Math.floor(max);
+  return Math.floor(Math.random() * (maxInt - minInt + 1) + minInt);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (async (msMin = 500, msMax = 1000) => {
+  const ms = getRandomIntInclusvie(msMin, msMax);
+  await sleep(ms);
+});
 
 /***/ }),
 

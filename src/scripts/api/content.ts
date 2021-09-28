@@ -30,9 +30,9 @@ export const loadContents = async (
         folderId: item.folderId,
         type: item.type,
 
-        createdAt: item.createdAt,
+        createdAt: new Date(item.createdAt),
         createdBy: item.createdBy,
-        updatedAt: item.updatedAt,
+        updatedAt: new Date(item.updatedAt),
         updatedBy: item.updatedBy,
       };
     }
@@ -44,9 +44,9 @@ export const loadContents = async (
       isFolder: item.isFolder,
       folderId: item.folderId,
 
-      createdAt: item.createdAt,
+      createdAt: new Date(item.createdAt),
       createdBy: item.createdBy,
-      updatedAt: item.updatedAt,
+      updatedAt: new Date(item.updatedAt),
       updatedBy: item.updatedBy,
     };
   });
