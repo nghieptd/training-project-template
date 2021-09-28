@@ -86,21 +86,61 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/scripts/components/_grid.ts":
-/*!*****************************************!*\
-  !*** ./src/scripts/components/_grid.ts ***!
-  \*****************************************/
+/***/ "./src/scripts/components/_table.ts":
+/*!******************************************!*\
+  !*** ./src/scripts/components/_table.ts ***!
+  \******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const renderGrid = () => {
-  // TODO: implement code to Render grid
-  console.log('Hello, World!');
+const getTypeClasses = type => {
+  const prefix = 'ms-Icon ms-Icon--';
+
+  switch (type) {
+    case 'folder':
+      return `${prefix}FabricFolderFill`;
+
+    case 'xlsx':
+      return `${prefix}ExcelDocument excelType`;
+
+    default:
+      return `${prefix}SurveyQuestions`;
+  }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (renderGrid);
+const buildTableRow = () => {
+  const tr = document.createElement('tr');
+  const type = document.createElement('td');
+  type.className = 'typeCell';
+  const icon = document.createElement('i');
+  icon.className = getTypeClasses('folder');
+  type.appendChild(icon);
+  const name = document.createElement('td');
+  name.innerText = 'CAS';
+  const modifiedDate = document.createElement('td');
+  modifiedDate.className = 'modifiedCell';
+  modifiedDate.innerText = 'April 30';
+  const modifiedBy = document.createElement('td');
+  modifiedBy.className = 'modByCell';
+  modifiedBy.innerText = 'Administrator MOD';
+  tr.append(type, name, modifiedDate, modifiedBy, document.createElement('td'));
+  return tr;
+};
+
+const renderTable = () => {
+  // TODO Render table data
+  const tbodyDesktop = document.querySelector('#table-desktop tbody');
+
+  if (tbodyDesktop === null) {
+    return;
+  }
+
+  tbodyDesktop.appendChild(buildTableRow());
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (renderTable);
 
 /***/ }),
 
@@ -114,11 +154,11 @@ const renderGrid = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/_helper */ "./src/scripts/utilities/_helper.ts");
-/* harmony import */ var _components_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/_grid */ "./src/scripts/components/_grid.ts");
+/* harmony import */ var _components_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/_table */ "./src/scripts/components/_table.ts");
 
 
 Object(_utilities_helper__WEBPACK_IMPORTED_MODULE_0__["default"])(() => {
-  Object(_components_grid__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  Object(_components_table__WEBPACK_IMPORTED_MODULE_1__["default"])();
 });
 
 /***/ }),

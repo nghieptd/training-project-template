@@ -1,6 +1,6 @@
 import ready from '../utilities/_helper';
-import renderGrid from '../components/_grid';
+import renderTable from '../components/_table';
 
 ready(() => {
-  renderGrid();
+  renderTable();
 });
