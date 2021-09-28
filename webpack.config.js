@@ -5,6 +5,7 @@ const glob = require('glob');
 const sass = require('sass');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
+const webpack = require('webpack');
 
 const getEntries = function() {
   return glob
@@ -134,6 +135,10 @@ const commonConfig = {
   },
 
   plugins: [
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery'
+    }),
     new FixStyleOnlyEntriesPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
