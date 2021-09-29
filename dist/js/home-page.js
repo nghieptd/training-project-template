@@ -15250,6 +15250,11 @@ const onSaveNewFile = async () => {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onNewFolder", function() { return onNewFolder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onSaveNewFolder", function() { return onSaveNewFolder; });
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/index.js");
+/* harmony import */ var _api_content__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/content */ "./src/scripts/api/content.ts");
+
+
+
 const toggleNewFolderModal = state => {
   const newFolderModal = $('#newFolderModal');
 
@@ -15258,11 +15263,59 @@ const toggleNewFolderModal = state => {
   }
 };
 
+const getNewFolderModalInput = name => {
+  switch (name) {
+    case 'name':
+      return document.getElementById('folderName').value;
+
+    case 'user':
+      return document.getElementById('folderUser').value;
+
+    default:
+      return '';
+  }
+};
+
+const setNewFolderModalInput = (name, value) => {
+  switch (name) {
+    case 'name':
+      document.getElementById('folderName').value = value;
+      break;
+
+    case 'user':
+      document.getElementById('folderUser').value = value;
+      break;
+
+    default:
+      break;
+  }
+};
+
+const clearNewFolderModalInput = () => {
+  setNewFolderModalInput('name', '');
+  setNewFolderModalInput('user', '');
+};
+
 const onNewFolder = () => {
   toggleNewFolderModal(true);
 };
-const onSaveNewFolder = () => {
+const onSaveNewFolder = async () => {
+  const folderName = getNewFolderModalInput('name');
+  const folderUser = getNewFolderModalInput('user');
+  const timestamp = new Date();
+  await Object(_api_content__WEBPACK_IMPORTED_MODULE_1__["createContent"])({
+    id: Object(uuid__WEBPACK_IMPORTED_MODULE_0__["v4"])(),
+    name: folderName,
+    isFolder: true,
+    folderId: null,
+    createdBy: folderUser,
+    updatedBy: folderUser,
+    createdAt: timestamp,
+    updatedAt: timestamp
+  });
   toggleNewFolderModal(false);
+  clearNewFolderModalInput();
+  window.location.reload();
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
