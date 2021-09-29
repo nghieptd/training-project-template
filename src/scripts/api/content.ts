@@ -108,8 +108,25 @@ export const editContent = async (
   saveLocalStorage(db);
 };
 
-export const deleteContent = () => {
-  // TODO
+export const deleteContent = async (id: string) => {
+  await randomSleep();
+
+  const db: Node[] | File[] = loadLocalStorage().map(item => ({
+    ...item,
+    createdAt: new Date(item.createdAt),
+    updatedAt: new Date(item.updatedAt),
+  }));
+
+  const contentIndex = db.findIndex(item => item.id === id);
+  if (contentIndex < 0) {
+    return;
+  }
+
+  const newDb = db
+    .slice(0, contentIndex)
+    .concat(db.slice(contentIndex + 1));
+
+  saveLocalStorage(newDb);
 };
 
 export const createContent = async (data: Node | File) => {

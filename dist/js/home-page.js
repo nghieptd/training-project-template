@@ -15040,7 +15040,20 @@ const editContent = async (id, name, modifiedBy) => {
   db[contentIndex].updatedAt = timestamp;
   saveLocalStorage(db);
 };
-const deleteContent = () => {// TODO
+const deleteContent = async id => {
+  await Object(_utilities_randomSleep__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  const db = loadLocalStorage().map(item => ({ ...item,
+    createdAt: new Date(item.createdAt),
+    updatedAt: new Date(item.updatedAt)
+  }));
+  const contentIndex = db.findIndex(item => item.id === id);
+
+  if (contentIndex < 0) {
+    return;
+  }
+
+  const newDb = db.slice(0, contentIndex).concat(db.slice(contentIndex + 1));
+  saveLocalStorage(newDb);
 };
 const createContent = async data => {
   await Object(_utilities_randomSleep__WEBPACK_IMPORTED_MODULE_0__["default"])();
@@ -15192,6 +15205,12 @@ const bindEvents = () => {
   if (modifyContentCancelBtn) {
     modifyContentCancelBtn.addEventListener('click', _modifyModal__WEBPACK_IMPORTED_MODULE_0__["onCancelModifyContent"]);
   }
+
+  const modifyContentDeleteBtn = document.querySelector('#modifyModal .modal-dialog .modal-footer .btn-danger');
+
+  if (modifyContentDeleteBtn) {
+    modifyContentDeleteBtn.addEventListener('click', _modifyModal__WEBPACK_IMPORTED_MODULE_0__["onDeleteContent"]);
+  }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (bindEvents);
@@ -15202,7 +15221,7 @@ const bindEvents = () => {
 /*!************************************************!*\
   !*** ./src/scripts/components/_modifyModal.ts ***!
   \************************************************/
-/*! exports provided: onModifyContent, onSaveModifyContent, onCancelModifyContent */
+/*! exports provided: onModifyContent, onSaveModifyContent, onCancelModifyContent, onDeleteContent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15210,6 +15229,7 @@ __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onModifyContent", function() { return onModifyContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onSaveModifyContent", function() { return onSaveModifyContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onCancelModifyContent", function() { return onCancelModifyContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onDeleteContent", function() { return onDeleteContent; });
 /* harmony import */ var _api_content__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/content */ "./src/scripts/api/content.ts");
 
 
@@ -15301,6 +15321,17 @@ const onSaveModifyContent = async () => {
 const onCancelModifyContent = () => {
   toggleModifyModal(false);
   clearModifyModalInputs();
+};
+const onDeleteContent = async () => {
+  const id = getModifyContentId();
+
+  if (id) {
+    await Object(_api_content__WEBPACK_IMPORTED_MODULE_0__["deleteContent"])(id);
+  }
+
+  toggleModifyModal(false);
+  clearModifyModalInputs();
+  window.location.reload();
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 

@@ -1,6 +1,7 @@
 import {
   onCancelModifyContent,
   onSaveModifyContent,
+  onDeleteContent,
 } from './_modifyModal';
 import { onNewFile, onSaveNewFile } from './_newFileModal';
 import { onNewFolder, onSaveNewFolder } from './_newFolderModal';
@@ -47,6 +48,12 @@ const bindEvents = () => {
       'click',
       onCancelModifyContent,
     );
+  }
+  const modifyContentDeleteBtn = document.querySelector(
+    '#modifyModal .modal-dialog .modal-footer .btn-danger',
+  );
+  if (modifyContentDeleteBtn) {
+    modifyContentDeleteBtn.addEventListener('click', onDeleteContent);
   }
 };
 

@@ -1,4 +1,8 @@
-import { editContent, getContent } from '../api/content';
+import {
+  deleteContent,
+  editContent,
+  getContent,
+} from '../api/content';
 
 const toggleModifyModal = (state: boolean, id?: string) => {
   const modifyModal = $('#modifyModal') as any;
@@ -87,4 +91,15 @@ export const onSaveModifyContent = async () => {
 export const onCancelModifyContent = () => {
   toggleModifyModal(false);
   clearModifyModalInputs();
+};
+
+export const onDeleteContent = async () => {
+  const id = getModifyContentId();
+  if (id) {
+    await deleteContent(id);
+  }
+
+  toggleModifyModal(false);
+  clearModifyModalInputs();
+  window.location.reload();
 };
