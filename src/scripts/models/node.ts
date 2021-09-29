@@ -1,7 +1,7 @@
 export interface Node {
   id: string;
   name: string;
-  folderId: string;
+  folderId: string | null;
   isFolder: boolean;
 
   createdAt: Date;

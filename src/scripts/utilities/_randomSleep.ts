@@ -9,7 +9,7 @@ const getRandomIntInclusvie = (min: number, max: number) => {
   return Math.floor(Math.random() * (maxInt - minInt + 1) + minInt);
 };
 
-export default async (msMin: number = 500, msMax: number = 1000) => {
+export default async (msMin = 500, msMax = 1000) => {
   const ms = getRandomIntInclusvie(msMin, msMax);
   await sleep(ms);
 };

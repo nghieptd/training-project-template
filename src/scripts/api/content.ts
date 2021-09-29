@@ -14,15 +14,7 @@ const loadLocalStorage = (): any[] => {
   return JSON.parse(jsonString);
 };
 const saveLocalStorage = (db: (Node | File)[]) => {
-  const mappedDB = db.map(item => ({
-    ...item,
-    type: 'type' in item ? item.type : 'folder',
-
-    createdAt: item.createdAt.toISOString(),
-    updatedAt: item.updatedAt.toISOString(),
-  }));
-
-  const jsonString = JSON.stringify(mappedDB);
+  const jsonString = JSON.stringify(db);
   localStorage.setItem(KEY, jsonString);
 };
 
