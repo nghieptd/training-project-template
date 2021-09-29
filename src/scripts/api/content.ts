@@ -82,8 +82,30 @@ export const loadContents = async (
   return mappedItems;
 };
 
-export const editContent = () => {
-  // TODO
+export const editContent = async (
+  id: string,
+  name: string,
+  modifiedBy: string,
+) => {
+  await randomSleep();
+
+  const db: Node[] | File[] = loadLocalStorage().map(item => ({
+    ...item,
+    createdAt: new Date(item.createdAt),
+    updatedAt: new Date(item.updatedAt),
+  }));
+
+  const contentIndex = db.findIndex(item => item.id === id);
+  if (contentIndex < 0) {
+    return;
+  }
+
+  const timestamp = new Date();
+  db[contentIndex].name = name;
+  db[contentIndex].updatedBy = modifiedBy;
+  db[contentIndex].updatedAt = timestamp;
+
+  saveLocalStorage(db);
 };
 
 export const deleteContent = () => {
@@ -106,4 +128,28 @@ export const createContent = async (data: Node | File) => {
   });
 
   saveLocalStorage(db);
+};
+
+export const getContent = async (
+  id: string,
+): Promise<Node | File | null> => {
+  await randomSleep();
+
+  const db = loadLocalStorage();
+  const item = db.find(el => el.id === id);
+  if (!item) {
+    return null;
+  }
+
+  const mappedItem = {
+    ...item,
+
+    createdAt: new Date(item.createdAt),
+    updatedAt: new Date(item.updatedAt),
+  };
+  if (!item.isFolder) {
+    mappedItem.type = item.type;
+  }
+
+  return mappedItem;
 };

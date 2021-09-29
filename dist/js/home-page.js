@@ -14932,7 +14932,7 @@ module.exports = g;
 /*!************************************!*\
   !*** ./src/scripts/api/content.ts ***!
   \************************************/
-/*! exports provided: loadContents, editContent, deleteContent, createContent */
+/*! exports provided: loadContents, editContent, deleteContent, createContent, getContent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14941,6 +14941,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editContent", function() { return editContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteContent", function() { return deleteContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createContent", function() { return createContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getContent", function() { return getContent; });
 /* harmony import */ var _utilities_randomSleep__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/_randomSleep */ "./src/scripts/utilities/_randomSleep.ts");
 /* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data */ "./src/scripts/api/data.ts");
 
@@ -15021,7 +15022,23 @@ const loadContents = async folder => {
 
   return mappedItems;
 };
-const editContent = () => {// TODO
+const editContent = async (id, name, modifiedBy) => {
+  await Object(_utilities_randomSleep__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  const db = loadLocalStorage().map(item => ({ ...item,
+    createdAt: new Date(item.createdAt),
+    updatedAt: new Date(item.updatedAt)
+  }));
+  const contentIndex = db.findIndex(item => item.id === id);
+
+  if (contentIndex < 0) {
+    return;
+  }
+
+  const timestamp = new Date();
+  db[contentIndex].name = name;
+  db[contentIndex].updatedBy = modifiedBy;
+  db[contentIndex].updatedAt = timestamp;
+  saveLocalStorage(db);
 };
 const deleteContent = () => {// TODO
 };
@@ -15036,6 +15053,26 @@ const createContent = async data => {
     updatedAt: data.updatedAt.toISOString()
   });
   saveLocalStorage(db);
+};
+const getContent = async id => {
+  await Object(_utilities_randomSleep__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  const db = loadLocalStorage();
+  const item = db.find(el => el.id === id);
+
+  if (!item) {
+    return null;
+  }
+
+  const mappedItem = { ...item,
+    createdAt: new Date(item.createdAt),
+    updatedAt: new Date(item.updatedAt)
+  };
+
+  if (!item.isFolder) {
+    mappedItem.type = item.type;
+  }
+
+  return mappedItem;
 };
 
 /***/ }),
@@ -15173,6 +15210,9 @@ __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onModifyContent", function() { return onModifyContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onSaveModifyContent", function() { return onSaveModifyContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onCancelModifyContent", function() { return onCancelModifyContent; });
+/* harmony import */ var _api_content__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/content */ "./src/scripts/api/content.ts");
+
+
 const toggleModifyModal = (state, id) => {
   const modifyModal = $('#modifyModal');
 
@@ -15189,14 +15229,78 @@ const toggleModifyModal = (state, id) => {
   }
 };
 
-const onModifyContent = id => {
-  toggleModifyModal(true, id);
+const getModifyContentId = () => {
+  const modifyModal = document.getElementById('modifyModal');
+
+  if (modifyModal && 'contentId' in modifyModal.dataset) {
+    return modifyModal.dataset.contentId || '';
+  }
+
+  return '';
 };
-const onSaveModifyContent = () => {
+
+const setModifyModalInput = (name, value) => {
+  switch (name) {
+    case 'name':
+      document.getElementById('contentName').value = value;
+      break;
+
+    case 'user':
+      document.getElementById('contentModifiedBy').value = value;
+      break;
+
+    default:
+      break;
+  }
+};
+
+const getModifyModalInput = name => {
+  switch (name) {
+    case 'name':
+      return document.getElementById('contentName').value;
+
+    case 'user':
+      return document.getElementById('contentModifiedBy').value;
+
+    default:
+      return '';
+  }
+};
+
+const clearModifyModalInputs = () => {
+  setModifyModalInput('name', '');
+  setModifyModalInput('user', '');
+};
+
+const onModifyContent = async id => {
+  const getContentTask = Object(_api_content__WEBPACK_IMPORTED_MODULE_0__["getContent"])(id);
+  toggleModifyModal(true, id);
+  const item = await getContentTask;
+
+  if (!item) {
+    toggleModifyModal(false);
+    return;
+  }
+
+  setModifyModalInput('name', item.name);
+  setModifyModalInput('user', item.updatedBy);
+};
+const onSaveModifyContent = async () => {
+  const contentName = getModifyModalInput('name');
+  const contentUser = getModifyModalInput('user');
+  const id = getModifyContentId();
+
+  if (id) {
+    await Object(_api_content__WEBPACK_IMPORTED_MODULE_0__["editContent"])(id, contentName, contentUser);
+  }
+
   toggleModifyModal(false);
+  clearModifyModalInputs();
+  window.location.reload();
 };
 const onCancelModifyContent = () => {
   toggleModifyModal(false);
+  clearModifyModalInputs();
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
