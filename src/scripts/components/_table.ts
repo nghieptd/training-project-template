@@ -1,6 +1,7 @@
 import { Node as ContentNode } from '../models/node';
 import { File as ContentFile } from '../models/file';
 import { loadContents } from '../api/content';
+import { onModifyContent } from './_modifyModal';
 
 const formatTime = (date: Date): string => {
   // eslint-disable-next-line no-restricted-globals
@@ -69,7 +70,11 @@ const buildTableRow = (data: ContentNode | ContentFile): Element => {
   type.appendChild(icon);
 
   const name = document.createElement('td');
-  name.innerText = data.name;
+  const nameAnchor = document.createElement('a');
+  nameAnchor.innerText = data.name;
+  nameAnchor.setAttribute('role', 'button');
+  nameAnchor.onclick = () => onModifyContent(data.id);
+  name.append(nameAnchor);
 
   const modifiedDate = document.createElement('td');
   modifiedDate.className = 'modifiedCell';

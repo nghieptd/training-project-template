@@ -15103,47 +15103,102 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/scripts/components/_navbar.ts":
+/***/ "./src/scripts/components/_events.ts":
 /*!*******************************************!*\
-  !*** ./src/scripts/components/_navbar.ts ***!
+  !*** ./src/scripts/components/_events.ts ***!
   \*******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _newFileModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_newFileModal */ "./src/scripts/components/_newFileModal.ts");
-/* harmony import */ var _newFolderModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_newFolderModal */ "./src/scripts/components/_newFolderModal.ts");
+/* harmony import */ var _modifyModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_modifyModal */ "./src/scripts/components/_modifyModal.ts");
+/* harmony import */ var _newFileModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_newFileModal */ "./src/scripts/components/_newFileModal.ts");
+/* harmony import */ var _newFolderModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_newFolderModal */ "./src/scripts/components/_newFolderModal.ts");
 
 
 
-const bindNavbarEvents = () => {
+
+const bindEvents = () => {
   const newFile = document.querySelector('#newDropdownMenu .file');
 
   if (newFile) {
-    newFile.addEventListener('click', _newFileModal__WEBPACK_IMPORTED_MODULE_0__["onNewFile"]);
+    newFile.addEventListener('click', _newFileModal__WEBPACK_IMPORTED_MODULE_1__["onNewFile"]);
   }
 
   const newFileSaveBtn = document.querySelector('#newFileModal .modal-dialog .modal-footer .btn-primary');
 
   if (newFileSaveBtn) {
-    newFileSaveBtn.addEventListener('click', _newFileModal__WEBPACK_IMPORTED_MODULE_0__["onSaveNewFile"]);
+    newFileSaveBtn.addEventListener('click', _newFileModal__WEBPACK_IMPORTED_MODULE_1__["onSaveNewFile"]);
   }
 
   const newFolder = document.querySelector('#newDropdownMenu .folder');
 
   if (newFolder) {
-    newFolder.addEventListener('click', _newFolderModal__WEBPACK_IMPORTED_MODULE_1__["onNewFolder"]);
+    newFolder.addEventListener('click', _newFolderModal__WEBPACK_IMPORTED_MODULE_2__["onNewFolder"]);
   }
 
   const newFolderSaveBtn = document.querySelector('#newFolderModal .modal-dialog .modal-footer .btn-primary');
 
   if (newFolderSaveBtn) {
-    newFolderSaveBtn.addEventListener('click', _newFolderModal__WEBPACK_IMPORTED_MODULE_1__["onSaveNewFolder"]);
+    newFolderSaveBtn.addEventListener('click', _newFolderModal__WEBPACK_IMPORTED_MODULE_2__["onSaveNewFolder"]);
+  }
+
+  const modifyContentSaveBtn = document.querySelector('#modifyModal .modal-dialog .modal-footer .btn-primary');
+
+  if (modifyContentSaveBtn) {
+    modifyContentSaveBtn.addEventListener('click', _modifyModal__WEBPACK_IMPORTED_MODULE_0__["onSaveModifyContent"]);
+  }
+
+  const modifyContentCancelBtn = document.querySelector('#modifyModal .modal-dialog .modal-footer .btn-secondary');
+
+  if (modifyContentCancelBtn) {
+    modifyContentCancelBtn.addEventListener('click', _modifyModal__WEBPACK_IMPORTED_MODULE_0__["onCancelModifyContent"]);
   }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (bindNavbarEvents);
+/* harmony default export */ __webpack_exports__["default"] = (bindEvents);
+
+/***/ }),
+
+/***/ "./src/scripts/components/_modifyModal.ts":
+/*!************************************************!*\
+  !*** ./src/scripts/components/_modifyModal.ts ***!
+  \************************************************/
+/*! exports provided: onModifyContent, onSaveModifyContent, onCancelModifyContent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onModifyContent", function() { return onModifyContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onSaveModifyContent", function() { return onSaveModifyContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onCancelModifyContent", function() { return onCancelModifyContent; });
+const toggleModifyModal = (state, id) => {
+  const modifyModal = $('#modifyModal');
+
+  if (modifyModal) {
+    modifyModal.modal(state ? 'show' : 'hide');
+
+    if (state) {
+      modifyModal.modal('show');
+      modifyModal.attr('data-content-id', id);
+    } else {
+      modifyModal.modal('hide');
+      modifyModal.removeAttr('data-content-id');
+    }
+  }
+};
+
+const onModifyContent = id => {
+  toggleModifyModal(true, id);
+};
+const onSaveModifyContent = () => {
+  toggleModifyModal(false);
+};
+const onCancelModifyContent = () => {
+  toggleModifyModal(false);
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
 
@@ -15331,6 +15386,8 @@ const onSaveNewFolder = async () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_content__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/content */ "./src/scripts/api/content.ts");
+/* harmony import */ var _modifyModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_modifyModal */ "./src/scripts/components/_modifyModal.ts");
+
 
 
 const formatTime = date => {
@@ -15385,7 +15442,13 @@ const buildTableRow = data => {
   icon.className = getTypeClasses('type' in data ? data.type : 'folder');
   type.appendChild(icon);
   const name = document.createElement('td');
-  name.innerText = data.name;
+  const nameAnchor = document.createElement('a');
+  nameAnchor.innerText = data.name;
+  nameAnchor.setAttribute('role', 'button');
+
+  nameAnchor.onclick = () => Object(_modifyModal__WEBPACK_IMPORTED_MODULE_1__["onModifyContent"])(data.id);
+
+  name.append(nameAnchor);
   const modifiedDate = document.createElement('td');
   modifiedDate.className = 'modifiedCell';
   modifiedDate.innerText = formatTime(data.updatedAt);
@@ -15428,7 +15491,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utilities_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/_helper */ "./src/scripts/utilities/_helper.ts");
 /* harmony import */ var _components_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/_table */ "./src/scripts/components/_table.ts");
-/* harmony import */ var _components_navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/_navbar */ "./src/scripts/components/_navbar.ts");
+/* harmony import */ var _components_events__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/_events */ "./src/scripts/components/_events.ts");
 
 
 
@@ -15436,7 +15499,7 @@ __webpack_require__.r(__webpack_exports__);
 
 Object(_utilities_helper__WEBPACK_IMPORTED_MODULE_2__["default"])(() => {
   Object(_components_table__WEBPACK_IMPORTED_MODULE_3__["default"])();
-  Object(_components_navbar__WEBPACK_IMPORTED_MODULE_4__["default"])();
+  Object(_components_events__WEBPACK_IMPORTED_MODULE_4__["default"])();
 });
 
 /***/ }),

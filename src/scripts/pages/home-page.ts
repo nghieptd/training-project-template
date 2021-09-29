@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ready from '../utilities/_helper';
 import renderTable from '../components/_table';
-import bindNavbarEvents from '../components/_navbar';
+import bindEvents from '../components/_events';
 
 ready(() => {
   renderTable();
-  bindNavbarEvents();
+  bindEvents();
 });

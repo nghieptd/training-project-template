@@ -1,7 +1,11 @@
+import {
+  onCancelModifyContent,
+  onSaveModifyContent,
+} from './_modifyModal';
 import { onNewFile, onSaveNewFile } from './_newFileModal';
 import { onNewFolder, onSaveNewFolder } from './_newFolderModal';
 
-const bindNavbarEvents = () => {
+const bindEvents = () => {
   const newFile = document.querySelector('#newDropdownMenu .file');
   if (newFile) {
     newFile.addEventListener('click', onNewFile);
@@ -25,6 +29,25 @@ const bindNavbarEvents = () => {
   if (newFolderSaveBtn) {
     newFolderSaveBtn.addEventListener('click', onSaveNewFolder);
   }
+
+  const modifyContentSaveBtn = document.querySelector(
+    '#modifyModal .modal-dialog .modal-footer .btn-primary',
+  );
+  if (modifyContentSaveBtn) {
+    modifyContentSaveBtn.addEventListener(
+      'click',
+      onSaveModifyContent,
+    );
+  }
+  const modifyContentCancelBtn = document.querySelector(
+    '#modifyModal .modal-dialog .modal-footer .btn-secondary',
+  );
+  if (modifyContentCancelBtn) {
+    modifyContentCancelBtn.addEventListener(
+      'click',
+      onCancelModifyContent,
+    );
+  }
 };
 
-export default bindNavbarEvents;
+export default bindEvents;
