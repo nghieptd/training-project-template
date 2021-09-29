@@ -41,7 +41,7 @@ export const loadContents = async (
 
   let fetchedItems: any[] = [];
   if (!folder) {
-    fetchedItems = data.filter(item => item.folderId < 0);
+    fetchedItems = data.filter(item => !item.folderId);
   } else {
     const targetFolder = data.find(item => item.name === folder);
     if (targetFolder) {
@@ -106,7 +106,7 @@ export const createContent = async (data: Node | File) => {
   // TODO Nested folder append
   db.push({
     ...data,
-    folderId: -1,
+    folderId: null,
     type: 'type' in data ? data.type : 'folder',
 
     createdAt: data.createdAt.toISOString(),
